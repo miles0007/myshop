@@ -1,0 +1,4 @@
+WeasyPrint==51
+braintree==4.1.0
+Django==3.0.6
+Markdown==3.2.2

@@ -1,0 +1,73 @@
+{% extends 'shop/product/detail.html' %}
+{% load humanize %}
+{% block title %}Your Shopping Cart{% endblock %}
+{% load static %}
+
+
+{% block content %}
+	<div class="container mt-3">
+		{% for item in cart %}
+	  	{% with product=item.product %}
+        <div class="card mb-2">
+        <div class="card-body">
+        	<div class="row align-items-center">
+		
+        	<div class="col-xs-6 col-md-9">
+        		<a href="{{ item.product.get_absolute_url }}">
+            	<img class="mb-2 rounded" src="{% if product.featured %}{{ product.featured.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" width="100px"></a>
+        	</div>
+        	<div class="col-xs-6 font-weight-bold col-md-3">
+        		<span class="align-self-center"><em class="text-muted">Price:</em>{{ item.total_price|intcomma }}</span>
+        	</div>
+            <span class="container font-weight-bold text-dark bd-highlight">
+            	{{ product.name }}
+            </span>
+        
+            <div class="col-md">
+              <div class="row">
+            	<div class="col-md-6">
+	              <form action="{% url 'cart:cart_add' product.id %}" method="post">
+			  			{{ item.update_quantity_form.quantity }}
+			  			{{ item.update_quantity_form.override }}
+			  			{% csrf_token %}
+			  			<input class="btn btn-primary text-light mb-2" type="submit" value="Update">
+			  	   </form>
+		  		</div>
+		  		<div class="col-md-6">
+		  			<form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+			  			{% csrf_token %}
+			  			<input class="form-control btn btn-secondary text-light" type="submit" value="Remove Item">
+			  		</form>
+		  		</div>
+		  	</div>
+		  </div>
+		</div>
+      </div>
+	</div>
+	{% endwith %}
+	{% empty %}
+	<div class="container">
+      <div class="py-5 text-center">
+        <h2>Your Cart is Empty</h2>
+        <a href="{% url 'shop:product_list' %}" class="btn btn-secondary btn-md">Continue Shopping</a>
+      </div>
+	{% endfor %}
+	{% if cart|length > 0 %}
+	<div class="card bg-light mb-2">
+		<div class="card-body">
+			<span class="float-left">Total Cost</span>
+			<span class="float-right font-weight-bold">&#8377;{{ cart.get_total_price|intcomma }}</span>
+		</div>
+	</div>
+	<div class="row align-items-center mb-5">
+		<div class="col-sm-6">
+			<a class="form-control btn-outline-dark btn-light text-center" href="{% url 'shop:product_list' %}">Continue Shopping</a>
+		</div>
+		<div class="col-sm-6">
+			<a class="form-control btn-outline-dark btn-light text-center" href="{% url 'orders:order_create' %}">Proceed Checkout</a>
+		</div>
+	</div>
+	{% endif %}
+	</div>
+
+{% endblock %}

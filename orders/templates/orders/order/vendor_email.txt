@@ -1,0 +1,5 @@
+Hey boss,
+		An Order has been placed for following:
+		{% for i in products %}
+		{{ i.name }} ------> {{ i.quantity }}
+		{% endfor %}

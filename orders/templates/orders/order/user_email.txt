@@ -1,0 +1,6 @@
+Box it, Thank You for Purchasing...
+
+We are glad to you {{ name }}
+your {% for i in products %}{{ i.name }},{% endfor %} will be out for delivery soon..
+We wil inform you by email for further updates..
+Stay Connected With Us..!!
