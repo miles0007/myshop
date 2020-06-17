@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/kolkata'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
@@ -133,17 +133,17 @@ USE_L10N = True
 USE_TZ = True
 
 # EMAIL SERVICE
-EMAIL_HOST = 'smtp.gmail.com' 
+# EMAIL_HOST = 'smtp.gmail.com' 
 
-EMAIL_HOST_USER = 'kavinkarthik025@gmail.com' 
+# EMAIL_HOST_USER = 'kavinkarthik025@gmail.com' 
 
-EMAIL_HOST_PASSWORD = 'hwozmkfsitabaegm'
+# EMAIL_HOST_PASSWORD = 'hwozmkfsitabaegm'
 
-EMAIL_PORT = 587 
+# EMAIL_PORT = 587 
 
-EMAIL_USE_TLS = True
+# EMAIL_USE_TLS = True
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -173,10 +173,15 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PRIVATE_KEY
 )
 
-
+# for the celery management 
 BROKER_URL = 'redis://h:p8e8163c2e8c4ba2dfdd28a809f9a7e6305d6f9a774bb28d1a865cf9f599c42fb@ec2-52-73-229-189.compute-1.amazonaws.com:15749'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'amqp://'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+# Redis
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1

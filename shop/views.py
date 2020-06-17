@@ -3,6 +3,7 @@ from shop.models import Category,Product
 from cart.forms import CartAddProductForm
 from shop.forms import SearchForm
 from django.contrib import messages
+from .recommender import Recommender
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -41,10 +42,13 @@ def product_detail(request,id,slug):
 	# print(product.sliders.img_name)
 	categories = Category.objects.all().order_by('name')
 	cart_product_form  =CartAddProductForm()
+	r = Recommender()
+	recommends = r.suggest_products_for([product],4)
 	return render(request,'shop/product/detail.html',
 				  {'product':product,
 				   'cart_product_form':cart_product_form,
-				   'categories':categories})
+				   'categories':categories,
+				   'recommends':recommends})
 
 def nav_list(request,category_slug=None):
 	category = None

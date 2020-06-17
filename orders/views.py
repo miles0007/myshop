@@ -2,12 +2,13 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import OrderItem,Order
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from shop.recommender import Recommender
 from .tasks import order_created
 from django.urls import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 from django.http import HttpResponse
-from shop.models import Category
+from shop.models import Category,Product
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 import weasyprint
@@ -17,7 +18,7 @@ def order_create(request):
 	categories = Category.objects.all().order_by('name')
 	cart = Cart(request)
 	product_all = []
-	
+	new = []
 	if request.method == "POST":
 		form = OrderCreateForm(request.POST)
 		if form.is_valid():
@@ -29,26 +30,22 @@ def order_create(request):
 								  price=item['price'],
 								  quantity=item['quantity'])
 				product_all.append(item['product'])
+			for i in (product_all):
+				ele = str(i)
+				new.append(ele)	# the elements are appended as a string value
+			
+			r  = Recommender()	# recommendation for produts in items
+			parse_list = []
+			for product_to_buy in product_all:
+				# get elements in the cart and and get the product model 
+				item = Product.objects.get(name=product_to_buy)
+				parse_list.append(item)
+			r.products_bought(parse_list)
+			string = '\n'.join(new)
+			print(string)
 			cart.clear()
 			# launch asynchoronus task
-			order_created.delay(order.id)
-			# context = {
-			# 'name' : cd['first_name'],'email':cd['email'],'products':product_all,'order_id':order.id}
-			
-			#send message to vendor
-			# subject = 'An order has been Placed by {}, order ID-{}'.format(cd['first_name'],order.id)
-			# message = render_to_string('orders/order/vendor_email.txt',context)
-			# send_mail(subject, message, 'kavinkarthik025@gmail.com', ('milesstonner@gmail.com',))
-
-			#send message_to user
-			# subject = 'Boxit, Thankyou for purchasing.'
-			# message = render_to_string('orders/order/user_email.txt',context)
-			# send_mail(subject, message, 'kavinkarthik025@gmail.com', [cd['email']])
-
-
-			# #set the order in session
-			# request.session['order_id'] = order.id
-			# return redirect(reverse('payment:process'))
+			order_created.delay(order.id,do=string)
 			return render(request,'orders/order/created.html',
 						{'order':order})
 
