@@ -121,7 +121,36 @@
       </div>
     </div>
   </div>
+  {% if recommends %}
+  <section id="similar-products">
+    <p class="h4">People Also Bought</p>
+    <div class="row">{% for product in recommends %}      
+      <div class="col-md-6 col-sm-6 col-lg-4">
+        <a href="{{ product.get_absolute_url }}">
+              <div class="card mb-4 shadow-sm">
+                <img src="{% if product.featured %}{{ product.featured.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class='thumbnail' width="100%" height="225" slice focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect>
+                <div class="card-body">
+                <p id="product-name" class="line-clamp go card-text">{{ product.name|truncatechars:40 }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group-sm">
+                        <span class="h6 text-dark">
+                          &#8377;{{ product.price|intcomma }}</span>
+                      </div>
+                      <button type="button" 
+                        class="btn btn-sm btn-outline-{% if product.available %}success{% else %}danger{% endif %}">
+                          {% if product.available %}Instock{% else %}Coming Soon{% endif %}
+                        </button>
+                  </div>
+                </div>
+              </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 </div>
+    
 {% endblock %}
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>

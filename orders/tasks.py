@@ -4,7 +4,7 @@ from .models import Order
 
 
 @task
-def order_created(order_id):
+def order_created(order_id,do):
     """
     Task to send an e-mail notification when an order is
     successfully created.
