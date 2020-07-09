@@ -82,22 +82,22 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shop_app',
-        'USER': 'postgres',
-        'PASSWORD':'jack123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'shop_app',
+#         'USER': 'postgres',
+#         'PASSWORD':'******',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -137,7 +137,7 @@ USE_TZ = True
 
 # EMAIL_HOST_USER = 'kavinkarthik025@gmail.com' 
 
-# EMAIL_HOST_PASSWORD = 'hwozmkfsitabaegm'
+# EMAIL_HOST_PASSWORD = '******************'
 
 # EMAIL_PORT = 587 
 
@@ -160,9 +160,9 @@ CART_SESSION_ID = 'cart'
 
 
 # Braintree settings 
-BRAINTREE_MERCHANT_ID = '2m84z24y8wv43r2c'  # Merchant ID 
-BRAINTREE_PUBLIC_KEY = 'ggt3w2qr4kpjm3bg'   # Public Key 
-BRAINTREE_PRIVATE_KEY = '39b0aaf1d080136d6cd0b94d0a0410df'  # Private key
+BRAINTREE_MERCHANT_ID = '******************'  # Merchant ID 
+BRAINTREE_PUBLIC_KEY = '*******************'   # Public Key 
+BRAINTREE_PRIVATE_KEY = '***********************'  # Private key
 
 import braintree
 
@@ -174,7 +174,7 @@ BRAINTREE_CONF = braintree.Configuration(
 )
 
 # for the celery management 
-BROKER_URL = 'redis://h:p8e8163c2e8c4ba2dfdd28a809f9a7e6305d6f9a774bb28d1a865cf9f599c42fb@ec2-52-73-229-189.compute-1.amazonaws.com:15749'
+BROKER_URL = 'YOUR BROKER URL'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
