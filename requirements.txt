@@ -14,7 +14,7 @@ Django==3.0.6
 django-appconf==1.0.4
 django-celery-email==3.0.0
 dnspython==1.16.0
-eventlet==0.25.2
+eventlet==0.31.0
 flower==0.9.4
 greenlet==0.4.15
 html5lib==1.0.1
